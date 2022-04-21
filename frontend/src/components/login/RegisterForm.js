@@ -4,8 +4,16 @@ import * as Yup from "yup";
 import RegisterInput from "../inputs/registerInput";
 import DateOfBirthSelect from "./DateOfBirthSelect";
 import GenderSelect from "./GenderSelect";
+import DotLoader from "react-spinners/DotLoader";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
-const RegisterForm = () => {
+const RegisterForm = ({ setVisible }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const userInfo = {
     first_name: "",
     last_name: "",
@@ -41,6 +49,43 @@ const RegisterForm = () => {
       .max(36, "Password can't be longer than 36 characters"),
   });
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [dateError, setDateError] = useState("");
+  const [genderError, setGenderError] = useState("");
+
+  const registerSubmit = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/register`,
+        {
+          first_name,
+          last_name,
+          email,
+          password,
+          bYear,
+          bMonth,
+          bDay,
+          gender,
+        }
+      );
+      setError("");
+      setSuccess(data.message);
+      const { message, ...rest } = data;
+      setTimeout(() => {
+        dispatch({ type: "LOGIN", payload: rest });
+        Cookies.set("user", JSON.stringify(rest));
+        navigate("/");
+      }, 2000);
+    } catch (error) {
+      setLoading(false);
+      setSuccess("");
+      setError(error.response.data.message);
+    }
+  };
+
   const [user, setUser] = useState(userInfo);
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
@@ -68,13 +113,11 @@ const RegisterForm = () => {
 
   const days = Array.from(new Array(getDays()), (val, index) => index + 1);
 
-  const [dateError, setDateError] = useState("");
-  const [genderError, setGenderError] = useState("");
   return (
     <div className="blur">
       <div className="register">
         <div className="register_header">
-          <i className="exit_icon"></i>
+          <i className="exit_icon" onClick={() => setVisible(false)}></i>
           <span>Sign Up</span>
           <span>It's quick and easy</span>
         </div>
@@ -112,6 +155,7 @@ const RegisterForm = () => {
             } else {
               setDateError("");
               setGenderError("");
+              registerSubmit();
             }
           }}
         >
@@ -181,6 +225,9 @@ const RegisterForm = () => {
               <div className="reg_btn_wrapper">
                 <button className="blue_btn open_signup">Sign Up</button>
               </div>
+              <DotLoader color="#1876f2" loading={loading} size={30} />
+              {error && <div className="error_text">{error}</div>}
+              {success && <div className="success_text">{success}</div>}
             </Form>
           )}
         </Formik>
