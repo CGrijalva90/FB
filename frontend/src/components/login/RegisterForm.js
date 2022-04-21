@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
-import LoginInput from "../inputs/loginInput";
+import * as Yup from "yup";
 import RegisterInput from "../inputs/registerInput";
 
 const RegisterForm = () => {
@@ -15,9 +15,32 @@ const RegisterForm = () => {
     gender: "",
   };
 
-  const registerValidation = () => {};
+  const registerValidation = Yup.object({
+    first_name: Yup.string()
+      .required("What is your first name?")
+      .min(2, "First name must be between 2 and 16 characters.")
+      .max(16, "First name must be between 2 and 16 characters.")
+      .matches(/^[aA-zZ]+$/, "Numbers and special characters are not allowed."),
+    last_name: Yup.string()
+      .required("What is your last name?")
+      .min(2, "Last name must be between 2 and 16 characters.")
+      .max(16, "Last name must be between 2 and 16 characters.")
+      .matches(/^[aA-zZ]+$/, "Numbers and special characters are not allowed."),
+    email: Yup.string()
+      .required(
+        "You'll need this when you log in and if you ever need to reset your password?"
+      )
+      .email("Enter a valid email address."),
+    password: Yup.string()
+      .required(
+        "Enter a combination of at least six numbers, letters and punctuation marks."
+      )
+      .min(6, "Password must be at least 6 characters")
+      .max(36, "Password can't be longer than 36 characters"),
+  });
 
   const [user, setUser] = useState(userInfo);
+
   const {
     first_name,
     last_name,
@@ -29,19 +52,19 @@ const RegisterForm = () => {
     gender,
   } = user;
 
+  const yearTemp = new Date().getFullYear();
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
 
-  const years = Array.from(new Array(108), (val, index) => bYear - index);
-  const months = Array.from(new Array(12), (value, index) => 1 + index);
+  const years = Array.from(new Array(108), (val, index) => yearTemp - index);
+  const months = Array.from(new Array(12), (val, index) => 1 + index);
   const getDays = () => {
     return new Date(bYear, bMonth, 0).getDate();
   };
 
   const days = Array.from(new Array(getDays()), (val, index) => index + 1);
-
   return (
     <div className="blur">
       <div className="register">
@@ -62,7 +85,7 @@ const RegisterForm = () => {
             bDay,
             gender,
           }}
-          // validationSchema={registerValidation}
+          validationSchema={registerValidation}
         >
           {(formik) => (
             <Form className="register_form">
