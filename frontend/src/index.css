@@ -69,8 +69,12 @@ a {
   background: var(--bg-secondary);
 }
 
-.hover2:hover{
+.hover2:hover {
   background: var(--bg-third);
+}
+
+.hover3:hover {
+  background: #d4d6da3a;
 }
 /* ---- Hovers ---- */
 
@@ -79,3 +83,29 @@ a {
   width: 500px;
   background: red;
 }
+
+/* ---SCROLLBAR--- */
+.scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: #aeaeafa1;
+  border-radius: 5px;
+}
+/* ---SCROLLBAR--- */
+
+/* ----CIRCLE---- */
+.small_circle {
+  position: relative;
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 11px;
+  background: var(--bg-third);
+  cursor: pointer;
+}
+/* ----CIRCLE---- */

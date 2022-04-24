@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./styles.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import useClickOutside from "../../helpers/clickOutside";
 import {
   Logo,
   Search,
@@ -16,11 +17,26 @@ import {
   ArrowDown,
 } from "../../svg";
 import SearchMenu from "./SearchMenu";
-
+import UserMenu from "./userMenu";
+import AllMenu from "./AllMenu";
 const Header = () => {
   const { user } = useSelector((user) => ({ ...user }));
-  const [showSearchMenu, setShowSearchMenu] = useState(false);
   const color = "#65676b";
+
+  const [showSearchMenu, setShowSearchMenu] = useState(false);
+  const [showAllMenu, setShowAllMenu] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const allmenu = useRef(null);
+  const userMenu = useRef(null);
+
+  useClickOutside(userMenu, () => {
+    setShowUserMenu(false);
+  });
+  useClickOutside(allmenu, () => {
+    setShowAllMenu(false);
+  });
+
   return (
     <header>
       <div className="header_left">
@@ -70,8 +86,16 @@ const Header = () => {
           <img src={user?.picture} alt="" />
           <span>{user?.first_name}</span>
         </Link>
-        <div className="circle_icon hover1">
-          <Menu />
+        <div className="circle_icon hover1" ref={allmenu}>
+          <div
+            onClick={() => {
+              setShowAllMenu((prev) => !prev);
+            }}
+          >
+            <Menu />
+          </div>
+
+          {showAllMenu && <AllMenu />}
         </div>
         <div className="circle_icon hover1">
           <Messenger />
@@ -80,8 +104,11 @@ const Header = () => {
           <Notifications />
           <div className="right_notification">5</div>
         </div>
-        <div className="circle_icon hover1">
-          <ArrowDown />
+        <div className="circle_icon hover1" ref={userMenu}>
+          <div onClick={() => setShowUserMenu((prevValue) => !prevValue)}>
+            <ArrowDown />
+          </div>
+          {showUserMenu && <UserMenu user={user} />}
         </div>
       </div>
     </header>
