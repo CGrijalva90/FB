@@ -16,7 +16,7 @@
 
   .stories,
   .createPost {
-    width: 84%;
+    width: 84% !important;
   }
 
   .home_middle {
@@ -71,13 +71,13 @@
 
   .stories,
   .createPost {
-    width: 100%;
+    width: 100% !important;
   }
 }
 
 @media (max-width: 960px) {
   .createPost {
-    width: 92%;
+    width: 92% !important;
   }
 
   .stories {
@@ -112,7 +112,7 @@
   }
 
   .createPost {
-    width: 110%;
+    width: 110% !important;
   }
 
   .stories {
