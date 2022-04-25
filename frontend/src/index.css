@@ -3,16 +3,20 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 body {
   font-family: "Segoe UI", Helvetica, Arial, sans-serif;
 }
+
 html {
   overflow-y: scroll;
 }
+
 a {
   text-decoration: none;
   color: inherit;
 }
+
 :root {
   --bg-primary: #fff;
   --bg-secondary: #f0f2f5;
@@ -36,8 +40,8 @@ a {
   --shadow-inset: rgba(255, 255, 255, 0.5);
 }
 
-/* Buttons */
- .blue_btn {
+/*----Buttons----*/
+.blue_btn {
   border: none;
   outline: none;
   background: var(--blue-color);
@@ -51,20 +55,23 @@ a {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
+/*----Buttons----*/
 .blur {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  background: rgba(255, 255, 255, 0.768);
   bottom: 0;
-  background: rgba(255, 255, 255, 0.760);
   z-index: 99;
 }
 
-/* ---- Hovers ---- */
+/*----Buttons----*/
+
+/*-----Hovers-----*/
 .hover1:hover {
   background: var(--bg-secondary);
 }
@@ -76,15 +83,16 @@ a {
 .hover3:hover {
   background: #d4d6da3a;
 }
-/* ---- Hovers ---- */
 
+/*-----Hovers-----*/
 .card {
   height: 500px;
   width: 500px;
   background: red;
 }
 
-/* ---SCROLLBAR--- */
+/*----Scrollbar----*/
+
 .scrollbar::-webkit-scrollbar {
   width: 8px;
 }
@@ -93,9 +101,10 @@ a {
   background: #aeaeafa1;
   border-radius: 5px;
 }
-/* ---SCROLLBAR--- */
 
-/* ----CIRCLE---- */
+/*----Scrollbar----*/
+
+/*---Circles------*/
 .small_circle {
   position: relative;
   height: 36px;
@@ -108,4 +117,5 @@ a {
   background: var(--bg-third);
   cursor: pointer;
 }
-/* ----CIRCLE---- */
+
+/*---Circles------*/

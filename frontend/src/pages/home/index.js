@@ -16,7 +16,6 @@ const Home = () => {
   useClickOutside(el, () => {
     setVisible(false);
   });
-
   return (
     <div className="home">
       <Header />
