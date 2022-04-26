@@ -180,5 +180,3 @@ exports.sendVerification = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-exports.logout = async (req, res) => {};
