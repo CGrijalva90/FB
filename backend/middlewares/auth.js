@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 exports.authUser = async (req, res, next) => {
   try {
     let tmp = req.header("Authorization");
+
     const token = tmp ? tmp.slice(7, tmp.length) : "";
     if (!token) {
       return res
