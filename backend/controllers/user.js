@@ -152,3 +152,33 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.sendVerification = async (req, res) => {
+  try {
+    const id = req.user.id;
+    const user = await User.findById(id);
+    if (user.verified) {
+      return res
+        .status(400)
+        .json({ message: "This account is already activated " });
+    } else {
+      const emailVerificationToken = generateToken(
+        {
+          id: user._id.toString(),
+        },
+        "30m"
+      );
+      const url = `${process.env.BASE_URL}/activate/${emailVerificationToken}`;
+
+      sendVerificationEmail(user.email, user.first_name, url);
+      console.log("Email verification sent!");
+      return res.status(200).json({
+        message: "Email verification link has been sent to your email.",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.logout = async (req, res) => {};
