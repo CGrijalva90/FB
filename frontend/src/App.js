@@ -4,7 +4,6 @@ import Profile from "./pages/profile";
 import Home from "./pages/home";
 import LoggedInRoutes from "./routes/LoggedInRoutes";
 import NotLoggedInRoutes from "./routes/NotLoggedInRoutes";
-import { useSelector } from "react-redux";
 import Activate from "./pages/home/activate";
 
 const App = () => {
