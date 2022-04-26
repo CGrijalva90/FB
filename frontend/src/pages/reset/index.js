@@ -1,18 +1,23 @@
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Formik, Form } from "formik";
 import "./styles.css";
 import { useState } from "react";
-import axios from "axios";
-import LoginInput from "../../components/inputs/loginInput";
-
+import SearchAccount from "./SearchAccount";
+import SendEmail from "./SendEmail";
+import CodeVerification from "./CodeVerification";
+import Footer from "../../components/login/Footer";
+import ChangePassword from "./ChangePassword";
 const Reset = () => {
   const { user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [visible, setVisible] = useState(0);
+  const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmedPassword] = useState("");
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -20,10 +25,6 @@ const Reset = () => {
     navigate("/");
   };
 
-  const registerSubmit = async () => {
-    try {
-    } catch (error) {}
-  };
   return (
     <div className="reset">
       <div className="reset_header">
@@ -44,35 +45,23 @@ const Reset = () => {
         )}
       </div>
       <div className="reset_wrap">
-        <div className="reset_form">
-          <div className="reset_form_header">Find Your Account</div>
-          <div className="reset_form_text">
-            Please enter your email address or mobile number to search for your
-            account
-          </div>
-          <Formik>
-            {(formik) => (
-              <Form>
-                <LoginInput
-                  type="text"
-                  name="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email address or mobile number"
-                />
-                {error && <div className="error_text">{error}</div>}
-                <div className="reset_form_btns">
-                  <Link to="/login" className="gray_btn">
-                    Cancel
-                  </Link>
-                  <button type="submit" className="blue_btn">
-                    Search
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
+        {visible === 0 && (
+          <SearchAccount email={email} setEmail={setEmail} error={error} />
+        )}
+        {visible === 1 && <SendEmail user={user} />}
+        {visible === 2 && (
+          <CodeVerification code={code} setCode={setCode} error={error} />
+        )}
+        {visible === 3 && (
+          <ChangePassword
+            password={password}
+            setPassword={setPassword}
+            confirmPassword={confirmPassword}
+            setConfirmedPassword={setConfirmedPassword}
+          />
+        )}
       </div>
+      <Footer />
     </div>
   );
 };
