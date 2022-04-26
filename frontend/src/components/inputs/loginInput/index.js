@@ -3,6 +3,7 @@ import { useField, ErrorMessage } from "formik";
 import { useMediaQuery } from "react-responsive";
 
 const LoginInput = ({ placeholder, bottom, ...props }) => {
+  console.log(`bottom is ${bottom}`);
   const [field, meta] = useField(props);
   const desktopView = useMediaQuery({
     query: "(min-width: 850px)",
