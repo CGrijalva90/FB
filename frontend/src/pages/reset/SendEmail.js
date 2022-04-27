@@ -20,6 +20,7 @@ const SendEmail = ({
       });
       setVisible(2);
       setError("");
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       setError(error.response.data.message);

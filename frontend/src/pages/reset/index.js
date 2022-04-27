@@ -71,14 +71,28 @@ const Reset = () => {
           />
         )}
         {visible === 2 && (
-          <CodeVerification code={code} setCode={setCode} error={error} />
+          <CodeVerification
+            code={code}
+            error={error}
+            email={email}
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
+            setCode={setCode}
+            setError={setError}
+            setLoading={setLoading}
+            setVisible={setVisible}
+          />
         )}
         {visible === 3 && (
           <ChangePassword
             password={password}
-            setPassword={setPassword}
             confirmPassword={confirmPassword}
+            userInfo={userInfo}
+            error={error}
+            setPassword={setPassword}
             setConfirmPassword={setConfirmPassword}
+            setError={setError}
+            setLoading={setLoading}
           />
         )}
       </div>
