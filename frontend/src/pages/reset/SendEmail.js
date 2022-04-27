@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SendEmail = ({ user }) => {
+const SendEmail = ({ userInfo }) => {
   return (
     <div className="reset_form dynamic_height">
       <div className="reset_form_header">Reset Your Password</div>
@@ -11,16 +11,16 @@ const SendEmail = ({ user }) => {
             How do you want to receive the code to reset your password?
           </div>
           <label htmlFor="email" className="hover1">
-            <input type="radio" id="email" checekd readOnly />
+            <input type="radio" name="" id="email" checked readOnly />
             <div className="label_col">
               <span>Send code via email</span>
-              <span>email@email.com</span>
+              <span>{userInfo.email}</span>
             </div>
           </label>
         </div>
         <div className="reset_right">
-          <img src={user.picture} alt="" />
-          <span>{user.email}</span>
+          <img src={userInfo.picture} alt="" />
+          <span>{userInfo.email}</span>
           <span>Facebook user</span>
         </div>
       </div>

@@ -14,11 +14,13 @@ const Reset = () => {
   const navigate = useNavigate();
 
   const [visible, setVisible] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [userInfo, setUserInfo] = useState("");
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -47,9 +49,17 @@ const Reset = () => {
       </div>
       <div className="reset_wrap">
         {visible === 0 && (
-          <SearchAccount email={email} setEmail={setEmail} error={error} />
+          <SearchAccount
+            email={email}
+            setEmail={setEmail}
+            error={error}
+            setError={setError}
+            setLoading={setLoading}
+            setUserInfo={setUserInfo}
+            setVisible={setVisible}
+          />
         )}
-        {visible === 1 && <SendEmail user={user} />}
+        {visible === 1 && userInfo && <SendEmail userInfo={userInfo} />}
         {visible === 2 && (
           <CodeVerification code={code} setCode={setCode} error={error} />
         )}

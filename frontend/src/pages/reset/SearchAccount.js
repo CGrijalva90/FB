@@ -3,16 +3,42 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginInput from "../../components/inputs/loginInput";
 import * as Yup from "yup";
+import axios from "axios";
 
-const SearchAccount = ({ error, success }) => {
-  const [email, setEmail] = useState("");
-
+const SearchAccount = ({
+  email,
+  setEmail,
+  setUserInfo,
+  error,
+  setError,
+  setLoading,
+  setVisible,
+}) => {
   const validateEmail = Yup.object({
     email: Yup.string()
       .required("Email address is required")
       .email("Must be a valid email address")
       .max(50, "Email address can't be longer that 50 characters"),
   });
+
+  const handleSearch = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/finduser`,
+        {
+          email,
+        }
+      );
+      console.log(`Data is ${JSON.stringify(data)}`);
+      setUserInfo(data);
+      setVisible(1);
+      setError("");
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.message);
+    }
+  };
   return (
     <div className="reset_form">
       <div className="reset_form_header">Find Your Account</div>
@@ -26,6 +52,7 @@ const SearchAccount = ({ error, success }) => {
           email,
         }}
         validationSchema={validateEmail}
+        onSubmit={() => handleSearch()}
       >
         {(formik) => (
           <Form>
