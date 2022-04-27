@@ -4,7 +4,6 @@ const {
   activateAccount,
   login,
   sendVerification,
-  logout,
 } = require("../controllers/user");
 const { authUser } = require("../middlewares/auth");
 

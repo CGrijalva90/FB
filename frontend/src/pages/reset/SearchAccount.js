@@ -25,6 +25,7 @@ const SearchAccount = ({ error, success }) => {
         initialValues={{
           email,
         }}
+        validationSchema={validateEmail}
       >
         {(formik) => (
           <Form>

@@ -12,12 +12,13 @@ const Reset = () => {
   const { user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+
   const [visible, setVisible] = useState(0);
+  const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmedPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -57,7 +58,7 @@ const Reset = () => {
             password={password}
             setPassword={setPassword}
             confirmPassword={confirmPassword}
-            setConfirmedPassword={setConfirmedPassword}
+            setConfirmPassword={setConfirmPassword}
           />
         )}
       </div>

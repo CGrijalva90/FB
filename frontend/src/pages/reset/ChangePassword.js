@@ -2,14 +2,26 @@ import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import LoginInput from "../../components/inputs/loginInput";
+import * as Yup from "yup";
 
 const ChangePassword = ({
   password,
   setPassword,
-  confirmedPassword,
-  setConfirmedPassword,
+  confirmPassword,
+  setConfirmPassword,
   error,
 }) => {
+  const validatePassword = Yup.object({
+    password: Yup.string()
+      .required(
+        "Enter a combination of at least six numbers, letters and punctuation marks."
+      )
+      .min(6, "Password must be at least 6 characters")
+      .max(36, "Password can't be longer than 36 characters"),
+    confirmPassword: Yup.string()
+      .required("Confirm your password")
+      .oneOf([Yup.ref("password")], "Passwords must match"),
+  });
   return (
     <div className="reset_form" style={{ height: "310px" }}>
       <div className="reset_form_header">Change Password</div>
@@ -18,21 +30,24 @@ const ChangePassword = ({
         enableReinitialize
         initialValues={{
           password,
+          confirmPassword,
         }}
+        validationSchema={validatePassword}
       >
         {(formik) => (
           <Form>
             <LoginInput
-              type="text"
+              type="password"
               name="password"
               onChange={(e) => setPassword(e.target.value)}
               placeholder="New Password"
             />
             <LoginInput
-              type="text"
+              type="password"
               name="confirmPassword"
-              onChange={(e) => setConfirmedPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm new Password"
+              bottom
             />
             {error && <div className="error_text">{error}</div>}
             <div className="reset_form_btns">
