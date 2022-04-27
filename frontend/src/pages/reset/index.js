@@ -59,7 +59,17 @@ const Reset = () => {
             setVisible={setVisible}
           />
         )}
-        {visible === 1 && userInfo && <SendEmail userInfo={userInfo} />}
+        {visible === 1 && userInfo && (
+          <SendEmail
+            userInfo={userInfo}
+            email={email}
+            error={error}
+            setError={setError}
+            setLoading={setLoading}
+            setVisible={setVisible}
+            loading={loading}
+          />
+        )}
         {visible === 2 && (
           <CodeVerification code={code} setCode={setCode} error={error} />
         )}

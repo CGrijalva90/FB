@@ -30,7 +30,6 @@ const SearchAccount = ({
           email,
         }
       );
-      console.log(`Data is ${JSON.stringify(data)}`);
       setUserInfo(data);
       setVisible(1);
       setError("");

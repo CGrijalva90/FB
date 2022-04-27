@@ -1,7 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const SendEmail = ({ userInfo }) => {
+import axios from "axios";
+const SendEmail = ({
+  userInfo,
+  error,
+  setError,
+  setVisible,
+  setUserInfo,
+  email,
+  loading,
+  setLoading,
+}) => {
+  const sendEmail = async () => {
+    console.log(`Email is ${email}`);
+    try {
+      setLoading(true);
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/sendresetcode`, {
+        email,
+      });
+      setVisible(2);
+      setError("");
+    } catch (error) {
+      setLoading(false);
+      setError(error.response.data.message);
+    }
+  };
   return (
     <div className="reset_form dynamic_height">
       <div className="reset_form_header">Reset Your Password</div>
@@ -24,11 +47,16 @@ const SendEmail = ({ userInfo }) => {
           <span>Facebook user</span>
         </div>
       </div>
+      {error && (
+        <div className="error_text" style={{ padding: "10px" }}>
+          {error}
+        </div>
+      )}
       <div className="reset_form_btns">
         <Link to="/login" className="gray_btn">
           Not you?
         </Link>
-        <button type="submit" className="blue_btn">
+        <button onClick={() => sendEmail()} className="blue_btn">
           Continue
         </button>
       </div>
