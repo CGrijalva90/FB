@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import Picker from "emoji-picker-react";
 import "./styles.css";
+import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
+import AddToYourPost from "./AddToYourPost";
 
 const CreatePostPopup = ({ user }) => {
   const [text, setText] = useState("");
@@ -57,18 +58,17 @@ const CreatePostPopup = ({ user }) => {
             ></textarea>
           </div>
         )}
-        <div className="post_emojis_wrap">
-          {picker && (
-            <div className="comment_emoji_picker rlmove">
-              <Picker onEmojiClick={handleEmoj} />
-            </div>
-          )}
-          <img src="../../../icons/colorful.png" alt="" />
-          <i
-            className="emoji_icon_large"
-            onClick={() => setPicker((prev) => !prev)}
-          ></i>
-        </div>
+        {showPrev && (
+          <>
+            <EmojiPickerBackgrounds
+              text={text}
+              textRef={textRef}
+              setText={setText}
+            />
+          </>
+        )}
+        <AddToYourPost />
+        <button className="post_submit">Post</button>
       </div>
     </div>
   );
