@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./styles.css";
 
 const SendVerification = ({ user }) => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [loading, setLoading] = useState(true);
 
   const sendVerificationLink = async () => {
     try {
@@ -30,6 +29,7 @@ const SendVerification = ({ user }) => {
         after a month from creating.
       </span>
       <a
+        href="#"
         onClick={() => {
           sendVerificationLink();
         }}

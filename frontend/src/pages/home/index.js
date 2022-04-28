@@ -1,4 +1,3 @@
-import React, { useState, useRef } from "react";
 import Header from "../../components/header";
 import LeftHome from "../../components/home/left";
 import { useSelector } from "react-redux";
