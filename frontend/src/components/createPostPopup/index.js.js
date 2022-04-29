@@ -1,28 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSelector } from "react";
 import "./styles.css";
 import EmojiPickerBackgrounds from "./EmojiPickerBackgrounds";
 import AddToYourPost from "./AddToYourPost";
+import ImagePreview from "./ImagePreview";
 
 const CreatePostPopup = ({ user }) => {
   const [text, setText] = useState("");
-  const [showPrev, setShowPrev] = useState(false);
-  const [picker, setPicker] = useState(false);
-  const textRef = useRef(null);
-  const [cursorPosition, setCursorPosition] = useState();
-
-  useEffect(() => {
-    textRef.current.selectionEnd = cursorPosition;
-  }, [cursorPosition]);
-
-  const handleEmoj = (e, { emoji }) => {
-    const ref = textRef.current;
-    ref.focus();
-    const start = text.substring(0, ref.selectionStart);
-    const end = text.substring(ref.selectionStart);
-    const newText = start + emoji + end;
-    setText(newText);
-    setCursorPosition(start.length + emoji.length);
-  };
+  const [showPrev, setShowPrev] = useState(true);
+  const [images, setImages] = useState([]);
   return (
     <div className="blur">
       <div className="postBox">
@@ -46,26 +31,24 @@ const CreatePostPopup = ({ user }) => {
           </div>
         </div>
 
-        {!showPrev && (
-          <div className="flex_center">
-            <textarea
-              ref={textRef}
-              maxLength="100"
-              value={text}
-              placeholder={`What's on your mind, ${user.first_name}`}
-              className="post_input"
-              onChange={(e) => setText(e.target.value)}
-            ></textarea>
-          </div>
-        )}
-        {showPrev && (
+        {!showPrev ? (
           <>
             <EmojiPickerBackgrounds
               text={text}
-              textRef={textRef}
+              user={user}
               setText={setText}
+              showPrev={showPrev}
             />
           </>
+        ) : (
+          <ImagePreview
+            text={text}
+            user={user}
+            setText={setText}
+            showPrev={showPrev}
+            images={images}
+            setImages={setImages}
+          />
         )}
         <AddToYourPost />
         <button className="post_submit">Post</button>
